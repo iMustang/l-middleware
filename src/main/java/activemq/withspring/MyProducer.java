@@ -12,6 +12,7 @@ import javax.jms.Session;
 /**
  * @title: Producer
  * @description:
+ * https://www.jianshu.com/p/ecdc6eab554c
  */
 @Service
 public class MyProducer {
