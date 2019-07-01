@@ -129,3 +129,102 @@ ZREM key member [member ...]
 ZREMRANGEBYRANK key start stop
 ZREMRANGEBYSCORE key min max
 ```
+#### 2.3.6 Key
+```
+DEL key [key ...]
+EXISTS key
+EXPIRE key seconds
+EXPIREAT key timestamp
+KEYS pattern
+MIGRATE host port key destination-db timeout [COPY][REPLACE]
+MOVE key db
+PERSIST key
+RANDOMKEY
+RENAME key newkey
+TTL key
+PTTL key
+TYPE key
+```
+#### 2.3.7 系统相关命令
+```
+BGREWRITEAOF
+BGSAVE
+CLIENT KILL host:port
+CLIENT LIST
+CONFIG GET parameter
+CONFIG RESETSTAT
+CONFIG REWRITE
+CONFIG SET parameter value
+SELECT index
+DBSIZE
+DEBUG OBJECT key
+FLUSHALL
+FLUSHDB
+INFO [section]
+LASTSAVE
+MONITOR
+SHUTDOWN [SAVE|NOSAVE]
+```
+#### 2.3.8 事务
+```
+WATCH
+UNWATCH
+MULTI
+EXEC
+DISCARD
+```
+### 3. Redis高级
+#### 3.1 单线程模型
+**Redis单线程基本模型**  
+Redis客户端对服务端的每次调用都经历了*发送命令，执行命令，返回结果*三个过程。其中执行命令阶段，所有到达服务端的命令不会立刻执行，而是会进入一个队列，然后逐个被执行，多个客户端发送的命令的执行顺序是不确定的。但是不会有两条命令被同时执行，不会产生并发问题。  
+
+##### Appendix I：5种I/O模型
+参考文献：https://draveness.me/redis-io-multiplexing  
+
+**I/O发起系统调用的原因**  
+进程想要获取磁盘中的数据，能和磁盘打交道的只能是内核。进程通知内核要磁盘中的数据，此过程就是系统调用。  
+
+**一次I/O完成的步骤**
+![I/O完成的步骤](https://images2015.cnblogs.com/blog/830267/201601/830267-20160109235301465-2013686286.png)
+
+进程需要对磁盘中的数据进行操作，会向内核发起一个系统调用，然后此进程，将会被切换出去（会被挂起或者进入睡眠状态，也叫不可中断的睡眠），只有等到系统调用的结果完成后，进程会被唤醒，继续接下来的操作。  
+从系统调用的开始到系统调用结束经过的步骤：
+1. 进程向内核发起一个系统调用
+2. 内核接收到系统调用，知道是对文件的请求，于是告诉磁盘，把文件读取出来
+3. 磁盘接收到来自内核的命令后，把文件载入到内核的内存空间里面
+4. 内核的内存空间接收到数据之后，把数据copy到用户进程的内存空间(此过程是I/O发生的地方)
+5. 进程内存空间得到数据后，给内核发送通知
+6. 内核把接收到的通知回复给进程，此过程为唤醒进程，然后进程得到数据，进行下一步操作
+
+**5种I/O模型**
+1. 阻塞I/O  
+![阻塞I/O](https://images2015.cnblogs.com/blog/830267/201601/830267-20160109235301934-1714715378.png)
+调用结果返回之前，当前线程会被挂起(进入睡眠状态)，函数只有在得到结果之后才会返回，才能继续执行。  
+阻塞I/O系统怎么通知进程？  
+I/O完成后，系统直接通知进程，进程被唤醒。
+2. 非阻塞I/O
+![非阻塞I/O](https://images2015.cnblogs.com/blog/830267/201601/830267-20160109235302653-1288371123.png)
+3. 多路复用I/O
+
+##### Appendix II：中断与轮询
+**中断**  
+8051有3个内部中断源T0、T1、串行口，2个外部中断源INT0、INT1。  
+
+中断号|中断源|中断向量（中断入口地址）|
+:---:|:---:|:---:
+0|INT0|0003H|
+1|T0|000BH|
+2|INT1|0013H|
+3|T1|001BH|
+4|串行口中断|0023H|
+中断向量到下一个中断向量之间只有8B的存储空间，不是用来存储中断服务子程序的，是用来存储中断服务子程序的入口地址。  
+```
+// 中断服务子程序（中断函数）
+void 函数名() interrupt m{} // 如响应定时器中断，每秒指示灯亮一次。
+// m为中断源的编号，有五个中断源（0、1、2、3、4），中断编号会告诉编译器中断程序的入口地址。
+```
+**轮询**  
+以一定频率查询  
+
+阻塞等待时，线程挂起，不消耗CPU。
+忙等待消耗CPU。
