@@ -1,5 +1,5 @@
-## 1. 安装Redis
-### 1.1 编译安装
+### 1. 安装Redis
+#### 1.1 编译安装
 ```
 wget http://download.redis.io/releases/redis-3.2.12.tar.gz
 tar -zvxf redis-3.2.12.tar.gz
@@ -14,7 +14,7 @@ make
 ./src/redis-cli
 ./src/redis-cli -h 172.23.23.230 -p 6379
 ```
-### 1.2 修改配置文件
+#### 1.2 修改配置文件
 ```
 bind 127.0.0.1          //绑定ip，不绑定则注销掉即可
 protected-mode yes      
@@ -28,13 +28,13 @@ requirepass foobared    //密码设置
 requirepass 123456      // 设置密码为123456
 appendonly no           //是否开启aof
 ```
-### 1.3 报错解决
+#### 1.3 报错解决
 ```$xslt
 # You need tcl 8.5 or newer in order to run the Redis test
 yum install tcl
 ```
-## 2. 使用
-### 2.1 设置密码后连接
+### 2. 使用
+#### 2.1 设置密码后连接
 ```$xslt
 redis-cli -h 172.23.23.230 -p 6379 -a 123456
 
@@ -42,7 +42,7 @@ redis-cli -h 172.23.23.230 -p 6379 -a 123456
 redis-cli -h 172.23.23.230 -p 6379
 auth 123456
 ```
-### 2.2 性能测试
+#### 2.2 性能测试
 ```
 ./src/redis-benchmark -h 172.23.23.230 -p 6379 -q
 ```
@@ -51,7 +51,7 @@ Redis所有单个操作都是原子操作，多个操作支持事务。
 Redis中key失效策略：
 - 被动触发：GET时会检查key是否失效。
 - 主动触发：后台每秒10次（redis.conf中hz参数）定时任务，随机选择100个设置了过期时间的key，对过期的key进行失效。
-#### 2.3.1 String
+##### 2.3.1 String
 ```
 SET key value
 GET key
@@ -65,7 +65,7 @@ DECR key
 INCRBY key increment
 DECRBY key decrement
 ```
-#### 2.3.2 Hash
+##### 2.3.2 Hash
 ```
 HSET key field value
 HGET key field
@@ -79,7 +79,7 @@ HLEN key // 返回哈希表key中域的数量
 HVALS key
 HMSET key field value [field value ...]
 ```
-#### 2.3.3 List
+##### 2.3.3 List
 ```
 LPUSH key value [value ...]
 LPUSHX key value
@@ -99,7 +99,7 @@ BLPOP key timeout // 如果列表没有元素会阻塞列表直到等待超时�
 BRPOP key timeout //  如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。
 BRPOPLPUSH source destination timeout // 阻塞
 ```
-#### 2.3.4 Set
+##### 2.3.4 Set
 ```
 SADD key member [member ...]
 SCARD key
@@ -116,7 +116,7 @@ SREM key member [member ...]
 SUNION key [key ...]
 SUNIONSTORE destination key [key ...]
 ```
-#### 2.3.5 SortedSort
+##### 2.3.5 SortedSort
 ```
 ZADD key score member [[score member]...]
 ZCARD key
@@ -129,7 +129,7 @@ ZREM key member [member ...]
 ZREMRANGEBYRANK key start stop
 ZREMRANGEBYSCORE key min max
 ```
-#### 2.3.6 Key
+##### 2.3.6 Key
 ```
 DEL key [key ...]
 EXISTS key
@@ -145,7 +145,7 @@ TTL key
 PTTL key
 TYPE key
 ```
-#### 2.3.7 系统相关命令
+##### 2.3.7 系统相关命令
 ```
 BGREWRITEAOF
 BGSAVE
@@ -165,7 +165,7 @@ LASTSAVE
 MONITOR
 SHUTDOWN [SAVE|NOSAVE]
 ```
-#### 2.3.8 事务
+##### 2.3.8 事务
 ```
 WATCH
 UNWATCH
@@ -173,8 +173,8 @@ MULTI
 EXEC
 DISCARD
 ```
-### 3. Redis高级
-#### 3.1 单线程模型
+#### 3. Redis高级
+##### 3.1 单线程模型
 **Redis单线程基本模型**  
 Redis客户端对服务端的每次调用都经历了*发送命令，执行命令，返回结果*三个过程。其中执行命令阶段，所有到达服务端的命令不会立刻执行，而是会进入一个队列，然后逐个被执行，多个客户端发送的命令的执行顺序是不确定的。但是不会有两条命令被同时执行，不会产生并发问题。  
 
@@ -225,7 +225,7 @@ void 函数名() interrupt m{} // 如响应定时器中断，每秒指示灯亮�
 // m为中断源的编号，有五个中断源（0、1、2、3、4），中断编号会告诉编译器中断程序的入口地址。
 ```
 **轮询**  
-以一定频率查询  
+polling，以一定频率查询  
 
 阻塞等待时，线程挂起，不消耗CPU。
 忙等待消耗CPU。
