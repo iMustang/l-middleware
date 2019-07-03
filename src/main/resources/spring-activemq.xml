@@ -43,7 +43,7 @@
     </bean>
 
     <!-- 配置自定义监听：MessageListener -->
-    <bean id="msgQueueMessageListener" class="activemq.withspring.MsgQueueMessageListener"></bean>
+    <bean id="msgQueueMessageListener" class="middleware.activemq.withspring.MsgQueueMessageListener"></bean>
 
     <!-- 将连接工厂、目标对了、自定义监听注入jms模板 -->
     <bean id="sessionAwareListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">

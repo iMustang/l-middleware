@@ -1,6 +1,6 @@
-package activemq.withspring;
+package middleware.activemq.withspring;
 
-import activemq.BaseJunit4Test;
+import middleware.BaseJunit4Test;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

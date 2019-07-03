@@ -1,4 +1,4 @@
-package activemq.withspring;
+package middleware.activemq.withspring;
 
 import org.springframework.jms.listener.SessionAwareMessageListener;
 

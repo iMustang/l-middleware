@@ -1,4 +1,4 @@
-package alibaba.fastjson;
+package middleware.alibaba.fastjson;
 
 import java.util.List;
 

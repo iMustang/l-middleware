@@ -1,4 +1,4 @@
-package activemq;
+package middleware.activemq;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 

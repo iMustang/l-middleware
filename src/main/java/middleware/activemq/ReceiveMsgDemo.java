@@ -1,6 +1,6 @@
-package activemq;
+package middleware.activemq;
 
-import activemq.entity.Teacher;
+import middleware.activemq.entity.Teacher;
 import com.alibaba.fastjson.JSON;
 import org.apache.activemq.ActiveMQConnectionFactory;
 

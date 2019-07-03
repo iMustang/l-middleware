@@ -13,6 +13,11 @@ make
 // 客户端连接
 ./src/redis-cli
 ./src/redis-cli -h 172.23.23.230 -p 6379
+
+// 安装
+make PREFIX=/usr/local/redis/ install
+cp redis.conf /usr/local/redis/bin/
+// 启动 redis-server redis.conf
 ```
 #### 1.2 修改配置文件
 ```

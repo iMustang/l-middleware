@@ -1,4 +1,4 @@
-package activemq.entity;
+package middleware.activemq.entity;
 
 import java.util.List;
 

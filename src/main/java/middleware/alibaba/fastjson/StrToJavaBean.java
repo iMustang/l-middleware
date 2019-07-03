@@ -1,4 +1,4 @@
-package alibaba.fastjson;
+package middleware.alibaba.fastjson;
 
 import com.alibaba.fastjson.JSON;
 
