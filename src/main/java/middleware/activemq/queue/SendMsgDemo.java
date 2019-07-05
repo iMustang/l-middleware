@@ -1,4 +1,4 @@
-package middleware.activemq;
+package middleware.activemq.queue;
 
 import middleware.activemq.entity.Student;
 import middleware.activemq.entity.Teacher;
@@ -51,6 +51,13 @@ public class SendMsgDemo {
 		MapMessage mapMessage = session.createMapMessage();
 		mapMessage.setString("teacher", JSON.toJSONString(teacher));
 		producer.send(mapMessage);
+
+		if (producer != null) {
+			producer.close();
+		}
+		if (session != null) {
+			session.close();
+		}
 		if (connection != null) {
 			connection.close();
 		}
