@@ -19,14 +19,12 @@ public class ReceiveMsgListenerDemo {
 		Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 		Destination queue = session.createQueue("queueTest");
 		MessageConsumer consumer = session.createConsumer(queue);
-		consumer.setMessageListener(new MessageListener() {
-			public void onMessage(Message message) {
-				if (message instanceof TextMessage) {
-					try {
-						System.out.println(((TextMessage) message).getText());
-					} catch (JMSException e) {
-						e.printStackTrace();
-					}
+		consumer.setMessageListener(message -> {
+			if (message instanceof TextMessage) {
+				try {
+					System.out.println(((TextMessage) message).getText());
+				} catch (JMSException e) {
+					e.printStackTrace();
 				}
 			}
 		});

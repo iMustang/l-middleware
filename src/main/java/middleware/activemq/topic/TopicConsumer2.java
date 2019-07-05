@@ -23,15 +23,12 @@ public class TopicConsumer2 {
 		Session session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
 		Topic topic = session.createTopic("topicTest");
 		MessageConsumer consumer = session.createConsumer(topic);
-		consumer.setMessageListener(new MessageListener() {
-			@Override
-			public void onMessage(Message message) {
-				if (message instanceof TextMessage) {
-					try {
-						System.out.println("消费者2收到：" + ((TextMessage) message).getText());
-					} catch (JMSException e) {
-						e.printStackTrace();
-					}
+		consumer.setMessageListener(message -> {
+			if (message instanceof TextMessage) {
+				try {
+					System.out.println("消费者2收到：" + ((TextMessage) message).getText());
+				} catch (JMSException e) {
+					e.printStackTrace();
 				}
 			}
 		});
