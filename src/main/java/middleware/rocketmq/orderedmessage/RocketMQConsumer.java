@@ -40,18 +40,13 @@ public class RocketMQConsumer {
 
 		//设置一个Listener，主要进行消息的逻辑处理
 		//注意这里使用的是MessageListenerOrderly这个接口
-		consumer.registerMessageListener(new MessageListenerOrderly() {
+		consumer.registerMessageListener((List<MessageExt> msgs, ConsumeOrderlyContext context) -> {
+			System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
 
-			@Override
-			public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
-
-				System.out.println(Thread.currentThread().getName() + " Receive New Messages: " + msgs);
-
-				//返回消费状态
-				//SUCCESS 消费成功
-				//SUSPEND_CURRENT_QUEUE_A_MOMENT 消费失败，暂停当前队列的消费
-				return ConsumeOrderlyStatus.SUCCESS;
-			}
+			//返回消费状态
+			//SUCCESS 消费成功
+			//SUSPEND_CURRENT_QUEUE_A_MOMENT 消费失败，暂停当前队列的消费
+			return ConsumeOrderlyStatus.SUCCESS;
 		});
 
 		//调用start()方法启动consumer
