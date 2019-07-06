@@ -14,6 +14,7 @@ import java.util.List;
  * @description:
  */
 public class RocketMQConsumer {
+
 	public static void main(String[] args) throws MQClientException {
 
 		//声明并初始化一个consumer
