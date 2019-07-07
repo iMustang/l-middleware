@@ -18,7 +18,7 @@ public class RocketMQConsumer {
 	public static void main(String[] args) throws MQClientException {
 
 		//声明并初始化一个consumer
-		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("consumer1");
+		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("common_consumer");
 
 		consumer.setNamesrvAddr("192.168.121.130:9876;");
 
@@ -29,7 +29,7 @@ public class RocketMQConsumer {
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
 		//设置consumer所订阅的Topic和Tag，*代表全部的Tag
-		consumer.subscribe("TopicTest", "*");
+		consumer.subscribe("commonTopic", "*");
 
 		//设置一个Listener，主要进行消息的逻辑处理
 		consumer.registerMessageListener((List<MessageExt> msgs,

@@ -14,7 +14,7 @@ public class RocketMQProducer {
 	public static void main(String[] args) throws MQClientException, InterruptedException {
 
 		//声明并初始化一个producer
-		DefaultMQProducer producer = new DefaultMQProducer("producer1");
+		DefaultMQProducer producer = new DefaultMQProducer("common_producer");
 
 		//设置NameServer地址，多个地址之间用；分隔
 		producer.setNamesrvAddr("192.168.121.130:9876");
@@ -25,7 +25,7 @@ public class RocketMQProducer {
 		//发送10条消息到Topic为TopicTest，tag为TagA，消息内容为“Hello RocketMQ”拼接上i的值
 		for (int i = 0; i < 10; i++) {
 			try {
-				Message msg = new Message("TopicTest",
+				Message msg = new Message("commonTopic",
 						"TagA",
 						("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)
 				);

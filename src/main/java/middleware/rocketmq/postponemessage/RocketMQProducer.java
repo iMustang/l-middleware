@@ -9,19 +9,16 @@ import org.apache.rocketmq.remoting.common.RemotingHelper;
 /**
  * RocketMQProducer
  * description: 生产延时消息
- * author: xMustang
- * version: 1.0
- * created: 2019/7/6 19:05
  */
 public class RocketMQProducer {
 	public static void main(String[] args) throws MQClientException, InterruptedException {
-		DefaultMQProducer producer = new DefaultMQProducer("producer1");
+		DefaultMQProducer producer = new DefaultMQProducer("postpone_producer");
 		producer.setNamesrvAddr("192.168.121.130:9876");
 		producer.start();
 
 		for (int i = 0; i < 10; i++) {
 			try {
-				Message msg = new Message("TopicTest",
+				Message msg = new Message("postponeTopic",
 						"TagA",
 						("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET)
 				);

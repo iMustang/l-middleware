@@ -18,14 +18,14 @@ public class AsyncRocketMQProducer {
 	static String NAMESER_ADDR = "192.168.121.130:9876";
 
 	public static void main(String[] args) throws MQClientException {
-		DefaultMQProducer producer = new DefaultMQProducer("asyncSendMessage");
+		DefaultMQProducer producer = new DefaultMQProducer("async_producer");
 		producer.setNamesrvAddr(NAMESER_ADDR);
 		producer.start();
 		producer.setRetryTimesWhenSendAsyncFailed(0);
 		for (int i = 0; i < 10; i++) {
 			final int index = i;
 			try {
-				Message msg = new Message("TopicTest000",
+				Message msg = new Message("asyncTopic",
 						"TagA",
 						"OrderID188",
 						("Hello RMQ" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
