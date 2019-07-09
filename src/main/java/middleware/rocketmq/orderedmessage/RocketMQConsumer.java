@@ -36,7 +36,7 @@ public class RocketMQConsumer {
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 
 		//设置consumer所订阅的Topic和Tag
-		consumer.subscribe("TopicTestOrdered", "TagA");
+		consumer.subscribe("orderedTopic", "TagA");
 
 		//设置一个Listener，主要进行消息的逻辑处理
 		//注意这里使用的是MessageListenerOrderly这个接口
