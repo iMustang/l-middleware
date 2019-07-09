@@ -53,13 +53,7 @@ public class RocketMQProducer {
 				System.out.println(sendResult);
 			}
 			orderedProducer.shutdown();
-		} catch (MQClientException e) {
-			e.printStackTrace();
-		} catch (RemotingException e) {
-			e.printStackTrace();
-		} catch (MQBrokerException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+		} catch (MQClientException | RemotingException | MQBrokerException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
