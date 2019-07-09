@@ -24,6 +24,7 @@ import io.openmessaging.consumer.PullConsumer;
 import io.openmessaging.producer.Producer;
 import io.openmessaging.producer.SendResult;
 
+
 public class SimplePullConsumer {
     public static void main(String[] args) {
         final MessagingAccessPoint messagingAccessPoint =
