@@ -116,6 +116,15 @@
             <version>4.5.1</version>
         </dependency>
         <!-- end -->
+
+        <!-- minio 依赖-->
+        <!-- begin -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>3.0.10</version>
+        </dependency>
+        <!-- end -->
     </dependencies>
     <build>
         <resources>
